@@ -85,13 +85,13 @@ int main(void)
 		indexSize tempStruct;
 		int temp2, holeTemp;
 		auto it3 = holesIt;
+		holeTemp = it3->second;
 		for(int i = 1; i<numberOfHoles;i++)
 		{
-			holeTemp = it3->second;
 			it3++;
 			if (it3->second < holeTemp && segmentIt->second <= it3->second)
 				holeTemp = it3->second;
-		} 
+		}
 		for (int k = 0; k < numberOfHoles; k++)
 		{
 			if (segmentIt->second <= holesIt->second && holesIt->second > 0 && holesIt->second == holeTemp)
