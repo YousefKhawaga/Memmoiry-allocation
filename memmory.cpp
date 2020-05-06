@@ -16,9 +16,13 @@ void firstFit(int i, int numberOfHoles, map<string, int> &temp, map<int, int> &h
 
 void bestFit(int i, int numberOfHoles, map<string, int>& temp, map<int, int>& holes, map<int, indexSize>& occupied);
 
+void deallocation(int index, map<int, int>& holes, map<int, indexSize>& occupied);
+
 int main(void)
 {
-	int memorySize, numberOfHoles, numberOfProcesses, numberOfSegments;
+	string fitType;
+	int memorySize, numberOfHoles, numberOfProcesses, numberOfSegments, index;
+	cin >> fitType;
 	cin >> memorySize;
 	cin >> numberOfHoles;
 	map<int, int> holes;//(starting address, size)
@@ -44,8 +48,16 @@ int main(void)
 			temp[strTemp] = temp1;
 			processes[i] = temp;
 			numberOfHoles = holes.size();
-			bestFit(i, numberOfHoles, temp, holes, occupied);
+			if(fitType == "firstfit")
+				firstFit(i, numberOfHoles, temp, holes, occupied);
+			else if(fitType == "bestfit")
+				bestFit(i, numberOfHoles, temp, holes, occupied);
 		}
+	}
+	while (1)
+	{
+		cin >> index;
+		deallocation(index, holes, occupied);
 	}
 }
 
@@ -54,7 +66,7 @@ int main(void)
 		auto it = temp.begin();
 		auto it2 = holes.begin();
 		indexSize tempStruct;
-		int temp2;
+		int temp2, index;
 		for (int k = 0; k < numberOfHoles; k++)
 		{
 			if (it->second <= it2->second && it2->second > 0)
@@ -73,9 +85,12 @@ int main(void)
 			}
 			it2++;	// mehtagin n5ls el deallocatation
 		}
-		if (!temp.empty())
+		while (!temp.empty())
 		{
-			cout << "Holes don't fit" << endl;
+			cout << "Holes don't fit, please choose index to deallocate: " << endl;
+			cin >> index;
+			deallocation(index, holes, occupied);
+			firstFit(i, numberOfHoles, temp, holes, occupied);
 		}
 	}
 
@@ -83,7 +98,7 @@ int main(void)
 		auto segmentIt = temp.begin();
 		auto holesIt = holes.begin();
 		indexSize tempStruct;
-		int temp2, holeTemp;
+		int temp2, holeTemp, index;
 		auto it3 = holesIt;
 		holeTemp = it3->second;
 		for(int i = 1; i<numberOfHoles;i++)
@@ -110,8 +125,42 @@ int main(void)
 			}
 			holesIt++;	// mehtagin n5ls el deallocatation
 		}
-		if (!temp.empty())
+		while (!temp.empty())
 		{
-			cout << "Holes don't fit" << endl;
+			cout << "Holes don't fit, please choose index to deallocate: " << endl;
+			cin >> index;
+			deallocation(index, holes, occupied);
+			firstFit(i, numberOfHoles, temp, holes, occupied);
+		}
+	}
+
+	void deallocation(int index, map<int,int> &holes, map<int,indexSize> &occupied)
+	{
+		auto occupiedIt = occupied.begin();
+		int occupiedTemp;
+		for (; occupiedIt != occupied.end();)
+		{
+			if (occupiedIt->second.index == index)
+			{
+				occupiedTemp = occupiedIt->first;
+				holes[occupiedTemp] = occupiedIt->second.size;
+				occupied.erase(occupiedIt);
+			}
+			else
+				occupiedIt++;
+		}
+		auto holesIt = holes.begin();
+		auto holesIt2 = holesIt;
+		int holeAccumelate, temp;
+		for (int i = 1; i < holes.size(); i++)
+		{
+			holeAccumelate = holesIt->first + holesIt->second;
+			holesIt2++;
+			if (holesIt2->first == holeAccumelate)
+			{
+				holesIt->second += holesIt2->second;
+				holes.erase(holesIt2);
+			}
+			holesIt++;
 		}
 	}
