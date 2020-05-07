@@ -1,11 +1,9 @@
-
 #include <iostream>
 #include <map>
 #include <vector>
 #include <string>
 
 using namespace std;
-
 
 struct indexSize {
 	int index;
@@ -21,14 +19,13 @@ void deallocation(int index, map<int, int>& holes, map<int, indexSize>& occupied
 int main(void)
 {
 	string fitType;
-	int memorySize, numberOfHoles, numberOfProcesses, numberOfSegments, index;
+	int memorySize, numberOfHoles, numberOfProcesses, numberOfSegments, index, temp1, temp2;
+	map<int, int> holes;	//(starting address, size)
+	map<int, map<string, int>> processes;	//(index of process,name of segment, size of segment)
+	map<int, indexSize> occupied;	//(starting address, size of segment)
 	cin >> fitType;
 	cin >> memorySize;
 	cin >> numberOfHoles;
-	map<int, int> holes;//(starting address, size)
-	map<int, map<string, int>> processes;//(index of process,name of segment, size of segment)
-	map<int, indexSize> occupied;//(starting address, size of segment)
-	int temp1, temp2;
 	for (int i = 0; i < numberOfHoles; i++)
 	{
 		cin >> temp1;
@@ -83,7 +80,7 @@ int main(void)
 				holes.erase(it2);
 				break;
 			}
-			it2++;	// mehtagin n5ls el deallocatation
+			it2++;
 		}
 		while (!temp.empty())
 		{
@@ -123,7 +120,7 @@ int main(void)
 				holes.erase(holesIt);
 				break;
 			}
-			holesIt++;	// mehtagin n5ls el deallocatation
+				holesIt++;	
 		}
 		while (!temp.empty())
 		{
@@ -144,9 +141,9 @@ int main(void)
 			{
 				occupiedTemp = occupiedIt->first;
 				holes[occupiedTemp] = occupiedIt->second.size;
-				occupied.erase(occupiedIt);
+				occupiedIt = occupied.erase(occupiedIt);   ///////////
 			}
-			else
+			else                   ///////////
 				occupiedIt++;
 		}
 		auto holesIt = holes.begin();
@@ -159,7 +156,7 @@ int main(void)
 			if (holesIt2->first == holeAccumelate)
 			{
 				holesIt->second += holesIt2->second;
-				holes.erase(holesIt2);
+				holesIt2 = holes.erase(holesIt2);    /////////////
 			}
 			holesIt++;
 		}
