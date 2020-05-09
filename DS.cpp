@@ -14,7 +14,7 @@ int main()
 
 
 
-    string path = "C:/Users/Seif/Desktop/Talta Comp/2nd Term/Data Structures/questions/questions";
+    string path = "C:/Users/youse/OneDrive/Desktop/questions";
     for (const auto & entry : fs::directory_iterator(path))
         cout << entry.path() << endl;
 
