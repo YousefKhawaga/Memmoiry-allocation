@@ -51,7 +51,7 @@ list<string> Trie::search(string key)
 
 	// if current node is a leaf and we have reached the
 	// end of the string, return true
-	return path;
+	return curr->path;
 }
 
 // returns true if given node has any children
