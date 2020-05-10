@@ -14,15 +14,20 @@ Trie::Trie()
 void Trie::insert(string key,string path)
 {
 	// start from root node
+	if (path == "C:\\Users\\youse\\OneDrive\\Desktop\\questions\\10446.txt")
+	{
+		int i = 0;
+	}
 	Trie* curr = this;
 	for (int i = 0; i < key.length(); i++)
 	{
 		// create a new node if path doesn't exists
-		if (curr->character[key[i]] == nullptr)
-			curr->character[key[i]] = new Trie();
+		unsigned char x = key[i];
+		if (curr->character[x] == nullptr)
+			curr->character[x] = new Trie();
 
 		// go to next node
-		curr = curr->character[key[i]];
+		curr = curr->character[x];
 	}
 
 	// mark current node as leaf

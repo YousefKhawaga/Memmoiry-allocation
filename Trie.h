@@ -3,7 +3,7 @@
 #include <list>
 
 // define character size
-#define CHAR_SIZE 128
+#define CHAR_SIZE 256
 
 using namespace std;
 // A Class representing a Trie node
