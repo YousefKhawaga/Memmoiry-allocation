@@ -26,6 +26,7 @@ bool firstFit(int i,map<QString,int> &temp,map<int,int> &holes,map<int,indexSize
                 holes[temp2] = it2->second;
             tempStruct.index = i;
             tempStruct.size = it->second;
+            tempStruct.name = it->first;
             occupied[it2->first] = tempStruct;
             temp.clear();
             holes.erase(it2);
@@ -63,6 +64,7 @@ bool bestFit(int i, map<QString, int>& temp, map<int, int>& holes, map<int, inde
                 holes[temp2] = holesIt->second;
             tempStruct.index = i;
             tempStruct.size = segmentIt->second;
+            tempStruct.name = segmentIt->first;
             occupied[holesIt->first] = tempStruct;
             temp.clear();
             holes.erase(holesIt);

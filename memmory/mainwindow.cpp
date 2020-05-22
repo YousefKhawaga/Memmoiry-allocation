@@ -3,7 +3,7 @@
 #include "myrec.h"
 #include "memmory.cpp"
 #define hole Qt::white
-#define segment Qt::blue
+#define segment QColor(110, 164, 250,255)
 
 using namespace std;
 
@@ -116,6 +116,8 @@ void MainWindow::draw(){
         Myrec *rec = new Myrec(70,add,300,size,index);
         rec->setBrush(QBrush(segment));
         scene->addItem(rec);
+        QGraphicsTextItem *name =scene->addText("P" + QString::number(index) + "\n" +it->second.name ,QFont("sanserif"));
+        name->setPos(70,add);
         connect(rec,SIGNAL(dellacotian(int)),this,SLOT(de(int)));
     }
     for (auto it = holes.begin();it != holes.end();it++) {
