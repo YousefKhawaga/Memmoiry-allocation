@@ -27,7 +27,11 @@ QRectF Myrec::boundingRect() const
 
 void Myrec::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
-
-    //QGraphicsItem::mouseDoubleClickEvent(event);
     emit dellacotian(index);
+}
+
+void Myrec::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    if(event->button() == Qt::RightButton)
+        emit table(index);
 }

@@ -11,7 +11,7 @@ using namespace std;
 
 
 
-bool firstFit(int i,map<QString,int> &temp,map<int,int> &holes,map<int,indexSize> &occupied) {
+bool firstFit(int i,map<QString,int> &temp,map<int,int> &holes,map<int,indexSize> &occupied, map<int,vector<indexSize>> &process) {
     auto it = temp.begin();
     auto it2 = holes.begin();
     indexSize tempStruct;
@@ -28,6 +28,8 @@ bool firstFit(int i,map<QString,int> &temp,map<int,int> &holes,map<int,indexSize
             tempStruct.size = it->second;
             tempStruct.name = it->first;
             occupied[it2->first] = tempStruct;
+            tempStruct.index = it2->first;
+            process[i].push_back(tempStruct);
             temp.clear();
             holes.erase(it2);
             break;
@@ -39,7 +41,7 @@ bool firstFit(int i,map<QString,int> &temp,map<int,int> &holes,map<int,indexSize
     return true;
 }
 
-bool bestFit(int i, map<QString, int>& temp, map<int, int>& holes, map<int, indexSize>& occupied) {
+bool bestFit(int i, map<QString, int>& temp, map<int, int>& holes, map<int, indexSize>& occupied, map<int,vector<indexSize>> &process) {
     if (holes.empty())
         return false;
     auto segmentIt = temp.begin();
@@ -66,6 +68,8 @@ bool bestFit(int i, map<QString, int>& temp, map<int, int>& holes, map<int, inde
             tempStruct.size = segmentIt->second;
             tempStruct.name = segmentIt->first;
             occupied[holesIt->first] = tempStruct;
+            tempStruct.index = holesIt->first;
+            process[i].push_back(tempStruct);
             temp.clear();
             holes.erase(holesIt);
             break;
@@ -77,7 +81,7 @@ bool bestFit(int i, map<QString, int>& temp, map<int, int>& holes, map<int, inde
     return true;
 }
 
-void deallocation(int index, map<int,int> &holes, map<int,indexSize> &occupied)
+void deallocation(int index, map<int,int> &holes, map<int,indexSize> &occupied, map<int,vector<indexSize>> &process)
 {
     auto occupiedIt = occupied.begin();
     int occupiedTemp;
@@ -94,17 +98,23 @@ void deallocation(int index, map<int,int> &holes, map<int,indexSize> &occupied)
     }
     auto holesIt = holes.begin();
     auto holesIt2 = holesIt;
+    holesIt2++;
     int holeAccumelate;
-    for (int i = 1; i < holes.size(); i++)
+    while(holesIt2 != holes.end())
     {
         holeAccumelate = holesIt->first + holesIt->second;
-        holesIt2++;
+
         if (holesIt2->first == holeAccumelate)
         {
             holesIt->second += holesIt2->second;
             holesIt2 = holes.erase(holesIt2);    /////////////
         }
-        holesIt++;
+
+        else{
+            holesIt++;
+            holesIt2++;
+        }
     }
+    process.erase(index);
 }
 #endif

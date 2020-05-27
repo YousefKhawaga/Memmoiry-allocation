@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
-#include <list>
+#include <QString>
+#include <QStringList>
 
 // define character size
 #define CHAR_SIZE 256
@@ -13,15 +13,13 @@ private:
 
 	bool isLeaf;
 	Trie* character[CHAR_SIZE];
-	list<string> path;
+    QStringList path;
 public:
 	// Constructor
 	Trie();
 
-	void insert(string,string);
-	bool deletion(Trie*&, string);
-	list<string> search(string);
-	bool haveChildren(Trie const*);
+    void insert(QString,QString);
+    QStringList search(QString);
 };
 
 // Iterative function to insert a key in the Trie

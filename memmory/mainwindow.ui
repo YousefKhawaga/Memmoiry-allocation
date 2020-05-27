@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1013</width>
-    <height>763</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>540</x>
       <y>10</y>
       <width>431</width>
-      <height>701</height>
+      <height>641</height>
      </rect>
     </property>
    </widget>
@@ -30,7 +30,7 @@
       <x>10</x>
       <y>10</y>
       <width>531</width>
-      <height>701</height>
+      <height>641</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -42,7 +42,7 @@
        <x>0</x>
        <y>0</y>
        <width>529</width>
-       <height>699</height>
+       <height>639</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -240,6 +240,56 @@
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>650</y>
+      <width>961</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>959</width>
+       <height>189</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+          <underline>false</underline>
+          <strikeout>false</strikeout>
+          <stylestrategy>PreferDefault</stylestrategy>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Procces Tables</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_2"/>
       </item>
      </layout>
     </widget>

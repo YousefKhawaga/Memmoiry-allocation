@@ -44,6 +44,7 @@ void MainWindow::on_spinBox_4_valueChanged(int arg1)
         Size.append(size);
         Name.append(name);
     }
+
     for (int i = arg1;i<n;i++) {
         ui->gridLayout->removeWidget(Size[i]);
         ui->gridLayout->removeWidget(Label[i]);
@@ -52,36 +53,66 @@ void MainWindow::on_spinBox_4_valueChanged(int arg1)
         delete Label[i];
         delete Name[i];
     }
+
     Size.erase(Size.begin()+arg1, Size.end());
     Label.erase(Label.begin()+arg1, Label.end());
     Name.erase(Name.begin()+arg1, Name.end());
-    if (arg1 == 0){
-
-    }
     n = arg1;
 }
 
 void MainWindow::on_Process_clicked()
 {
+    bool flag = true;
     ui->pro->clear();
     map<QString,int> segments;
     for (int i =0;i < ui->spinBox_4->value();i++) {
-        segments[Name[i]->text()] = Size[i]->value();
+        segments[Name[0]->text()] = Size[0]->value();
+        if(ui->First->isChecked()){
+            if(!firstFit(index,segments,holes,occupied,process)){
+                ui->pro->setText("Failed to add Process please dealloacte to continue");
+                flag = false;
+            }
+            else {
+                ui->gridLayout->removeWidget(Size[0]);
+                ui->gridLayout->removeWidget(Label[0]);
+                ui->gridLayout->removeWidget(Name[0]);
+                delete Size[0];
+                delete Label[0];
+                delete Name[0];
+                Size.erase(Size.begin());
+                Label.erase(Label.begin());
+                Name.erase(Name.begin());
+            }
+        }
+        else if(ui->Best->isChecked()){
+            if(!bestFit(index,segments,holes,occupied,process)){
+                ui->pro->setText("Failed to add Process please dealloacte to continue");
+                flag = false;
+            }
+            else {
+                ui->gridLayout->removeWidget(Size[0]);
+                ui->gridLayout->removeWidget(Label[0]);
+                ui->gridLayout->removeWidget(Name[0]);
+                delete Size[0];
+                delete Label[0];
+                delete Name[0];
+                Size.erase(Size.begin());
+                Label.erase(Label.begin());
+                Name.erase(Name.begin());
+            }
+        }
+
+        else {
+            ui->pro->setText("Please Select method of allocation");
+            flag = false;
+        }
+        draw();
     }
-    if(ui->First->isChecked())
-        if(firstFit(index,segments,holes,occupied))
-            process.push_back(segments);
-        else
-            ui->pro->setText("Failed to add Process please dealloacte to continue");
-    else if(ui->Best->isChecked())
-        if(bestFit(index,segments,holes,occupied))
-            process.push_back(segments);
-        else
-            ui->pro->setText("Failed to add Process please dealloacte to continue");
-    else
-        ui->pro->setText("Please Select method of allocation");
-    index++;
-    draw();
+    if(flag){
+        index++;
+        n=0;
+        ui->spinBox_4->setValue(0);
+    }
 }
 
 void MainWindow::on_Hole_clicked()
@@ -92,8 +123,37 @@ void MainWindow::on_Hole_clicked()
 
 void MainWindow::de(int index)
 {
-    deallocation(index,holes,occupied);
+    deallocation(index,holes,occupied,process);
     draw();
+}
+
+void MainWindow::tableDraw(int index)
+{
+    vector<indexSize> t = process[index];
+    int row = t.size();
+    delete  table;
+    table = new QTableWidget(row,3);
+    QTableWidgetItem *name = new QTableWidgetItem();
+    name->setText("Name");
+    QTableWidgetItem *base = new QTableWidgetItem();
+    base->setText("Base");
+    QTableWidgetItem *limit = new QTableWidgetItem();
+    limit->setText("Limit");
+    table->setHorizontalHeaderItem(0,name);
+    table->setHorizontalHeaderItem(1,base);
+    table->setHorizontalHeaderItem(2,limit);
+    for (int j = 0;j < row;j++) {
+        QTableWidgetItem *name = new QTableWidgetItem();
+        name->setText(t[j].name);
+        QTableWidgetItem *base = new QTableWidgetItem();
+        base->setText(QString::number(t[j].index));
+        QTableWidgetItem *limit = new QTableWidgetItem();
+        limit->setText(QString::number(t[j].size));
+        table->setItem(j,0,name);
+        table->setItem(j,1,base);
+        table->setItem(j,2,limit);
+    }
+    ui->gridLayout_2->addWidget(table);
 }
 
 void MainWindow::draw(){
@@ -119,6 +179,7 @@ void MainWindow::draw(){
         QGraphicsTextItem *name =scene->addText("P" + QString::number(index) + "\n" +it->second.name ,QFont("sanserif"));
         name->setPos(70,add);
         connect(rec,SIGNAL(dellacotian(int)),this,SLOT(de(int)));
+        connect(rec,SIGNAL(table(int)),this,SLOT(tableDraw(int)));
     }
     for (auto it = holes.begin();it != holes.end();it++) {
         int add = it->first;
@@ -129,4 +190,6 @@ void MainWindow::draw(){
         end->setPos(0,add+size-20);
         scene->addRect(70,add,300,size,pen,QBrush(hole));
     }
+
+
 }

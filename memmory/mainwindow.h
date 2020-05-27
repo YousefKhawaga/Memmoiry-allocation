@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QGraphicsScene>
 #include <QGraphicsRectItem>
+#include <QTableWidget>
 #include <struct.h>
 
 using namespace std;
@@ -36,13 +37,16 @@ private slots:
 
     void de(int index);
 
+    void tableDraw(int index);
+
 private:
     Ui::MainWindow *ui;
     QList<QSpinBox*> Size;
     QList<QLineEdit*> Name;
     QList<QLabel*> Label;
+    QTableWidget *table;
     QGraphicsScene *scene;
-    vector<std::map<QString,int>> process;
+    map<int,vector<indexSize>> process;
     map<int, int> holes;
     map<int, indexSize> occupied;
     int n=0,index=0;
