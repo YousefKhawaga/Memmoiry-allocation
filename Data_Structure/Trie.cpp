@@ -14,10 +14,6 @@ Trie::Trie()
 void Trie::insert(QString key,QString path)
 {
     // start from root node
-    if (path == "C:\\Users\\youse\\OneDrive\\Desktop\\questions\\10446.txt")
-    {
-        int i = 0;
-    }
     Trie* curr = this;
     for (int i = 0; i < key.length(); i++)
     {
@@ -33,7 +29,7 @@ void Trie::insert(QString key,QString path)
     // mark current node as leaf
     curr->isLeaf = true;
 //    if (!curr->path.contains(path))
-        curr->path.push_back(path);
+    curr->path.push_back(path);
 }
 
 // Iterative function to search a key in Trie. It returns true

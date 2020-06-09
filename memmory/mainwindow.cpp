@@ -112,6 +112,7 @@ void MainWindow::on_Process_clicked()
         index++;
         n=0;
         ui->spinBox_4->setValue(0);
+        ui->pro->setText("Process added successfully");
     }
 }
 

@@ -75,6 +75,7 @@ void MainWindow::on_pushButton_2_clicked()
     ui->listWidget->addItems(files);
     int count = ui->listWidget->count();
     ui->count->setText("Found in "+QString::number(count)+" files");
+    ui->textBrowser->setText("");
 
     //    for (auto i = files.begin(); i != files.end(); i++) {
 
@@ -106,7 +107,7 @@ void MainWindow::on_listWidget_itemActivated(QListWidgetItem *item)
     while(index != -1){
         QTextCursor cursor(ui->textBrowser->document());
         cursor.setPosition(index, QTextCursor::MoveAnchor);
-        cursor.setPosition(index+4, QTextCursor::KeepAnchor);
+        cursor.setPosition(index+search.length(), QTextCursor::KeepAnchor);
         cursor.setCharFormat(fmt);
         index = content.indexOf(search,index+search.length());
     }
