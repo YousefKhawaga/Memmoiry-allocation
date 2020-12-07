@@ -28,23 +28,21 @@ double avwt(list<properties> temp2, list<properties> process, int numberOfProces
     list<properties>::iterator it3;
     list<properties>::reverse_iterator it;
     double ft, arv, burs;
-    double avwt = 0;// , count;
+    double avwt = 0;
     it = temp2.rbegin();
     for (int i = 1; i <= numberOfProcesses; i++)
     {
         it = temp2.rbegin();
-        //count = 0;
+
         for (; it != temp2.rend(); it++)
         {
             if (i == it->index)
             {
-                //count = count + it->burstTime;
+
                 ft = it->startTime + it->burstTime;
                 break;
             }
-            //else
-                //count = count + it->burstTime;
-            //it++;
+
         }
 
         it3 = process.begin();
@@ -449,7 +447,8 @@ double avwt(list<properties> temp2, list<properties> process, int numberOfProces
         {
             it2 = it;
             it2++;
-            sum = (it2 == process.end()) ? (sum + it->burstTime) : (it2->arrivalTime > (sum + it->burstTime)) ? it2->arrivalTime : (sum + it->burstTime);
+            sum = (it2 == process.end()) ? (sum + it->burstTime) :
+                  (it2->arrivalTime > (sum + it->burstTime)) ? it2->arrivalTime : (sum + it->burstTime);
             it++;
         }
         it = process.begin();
